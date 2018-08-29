@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Votaciones con token</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col">
+                <div class="alert d-none fixed-top" id="msg" role="alert"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron">
+                    <h1 class="display-4">Votaciones con token (Rinkeby Testnet)</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col py-2">
+                        <h2>Votar</h2>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Realizar mi voto</span>
+                            </div>
+                            <input type="text" id="candidate" class="form-control" placeholder="Candidato"/>
+                            <input type="text" id="vote-tokens" class="form-control" placeholder="Tokens"/>
+                            <div class="input-group-append">
+                                <a href="#" onclick="voteForCandidate(); return false;" class="btn btn-primary">Votar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Candidato</th>
+                                        <th>Votos</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="candidate-rows"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-2">
+            
+                    <div class="col">
+                        <div class="card">
+                            <img class="card-img-top" src="http://www.ine.mx/wp-content/uploads/2017/04/de-numero-casillas.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h4>Consultar padrón electoral</h4>
+                                <div id="buy-msg"></div>
+                                <div class="input-group">
+                                    <input type="text" id="voter-info", class="form-control  col-sm-8" placeholder="Llave pública" /> 
+
+                                    <div class="input-group-append">
+                                        <a href="#" onclick="lookupVoterInfo(); return false;" class="btn btn-primary">Buscar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <div class="card">
+                            <div class="card-header">
+                                Resultados de búsqueda
+                            </div>
+                            <ul class="list-group list-group-flush voter-details">
+                                <li id="tokens-bought" class="list-group-item"></li>
+                                    <li id="votes-cast" class="list-group-item"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <h2>Tokens</h2>
+                <div class="row">
+                    <div class="col py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Comprar tokens</h4>
+                                <div id="buy-msg"></div>
+                                <div class="input-group">
+                                    <input type="text" id="buy" class="form-control col-sm-8" placeholder="Tokens"/> 
+                                    <div class="input-group-append">
+                                        <a href="#" onclick="buyTokens(); return false;" class="btn btn-primary">Comprar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Tokens Info</th>
+                                    <th>Valor</th>
+                                </tr>
+                                <tr>
+                                    <td>Tokens en venta</td>
+                                    <td id="tokens-total"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tokens vendidos</td>
+                                    <td id="tokens-sold"></td>
+                                </tr>
+                                <tr>
+                                    <td>Precio por token</td>
+                                    <td id="token-cost"></td>
+                                </tr>
+                                <tr>
+                                    <td>Balance en el contrato</td>
+                                    <td id="contract-balance"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+</html>
